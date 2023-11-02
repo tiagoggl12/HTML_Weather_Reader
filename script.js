@@ -3,11 +3,12 @@ document.getElementById('getLocation').addEventListener('click', function() {
         navigator.geolocation.getCurrentPosition(async function(position) {
             const latitude = position.coords.latitude;
             const longitude = position.coords.longitude;
-            const altitude = position.coords.altitude || 'Não Disponível';
+            const altitude = position.coords.altitude || 'Não disponível';
 
             
             
             document.getElementById('latitude').textContent = latitude.toFixed(2);
+            document.getElementById('longitude').textContent = longitude.toFixed(2);
             document.getElementById('altitude').textContent = altitude;
 
             // Chama a função para obter dados meteorológicos
