@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Localização Fixa no Mapa</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+</head>
+<body>
+    <div id="map" style="width: 300px; height: 300px;"></div>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        // Substitua com a latitude e longitude desejadas
+        var minhaLatitude = -23.550520;
+        var minhaLongitude = -46.633308;
+
+        var map = L.map('map').setView([minhaLatitude, minhaLongitude], 13); // Inicializa o mapa com a sua localização
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Adiciona um marcador na sua localização
+        var marcador = L.marker([minhaLatitude, minhaLongitude]).addTo(map);
+        marcador.bindPopup("<b>Sua localização fixa!</b><br>Latitude: " + minhaLatitude + "<br>Longitude: " + minhaLongitude).openPopup();
+    </script>
+</body>
+</html>
+

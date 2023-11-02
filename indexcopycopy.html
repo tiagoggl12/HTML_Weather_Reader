@@ -1,0 +1,76 @@
+<<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<title>Dados Meteorológicos</title>
+<style>
+  #map {
+    height: 300px;
+    width: 300px;
+  }
+</style>
+</head>
+<body>
+<h1>NiveaUVDIData</h1>
+<button id="get-weather">Obter Dados Meteorológicos</button>
+
+<div id="weather-data">
+  <p>Latitude: <span id="latitude"></span></p>
+  <p>Longitude: <span id="longitude"></span></p>
+  <p>Altitude: <span id="elevation"></span></p>
+  <p>Hora do Dia: <span id="timeOfDay"></span></p>
+  <p>Temperatura: <span id="temperature"></span></p>
+  <p>Umidade Relativa: <span id="humidity"></span></p>
+  <p>Temperatura Aparente: <span id="apparent-temperature"></span></p>
+  <p>Velocidade do Vento: <span id="wind-speed"></span></p>
+  <p>Reflexão da superficie: <span id="direct-radiation"></span></p>
+  <p>Cobertura de Nuvens: <span id="cloud-cover"></span></p>
+  <p>Índice UV: <span id="uv-index"></span></p>
+  <h1>Desconto Total: <span id="resultado"></span></h1>
+</div>
+
+<!-- Div para o mapa -->
+<div id="map"></div>
+
+<script src="scriptcopy.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Verifica se o navegador suporta geolocalização
+  if ('geolocation' in navigator) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      // Obtém as coordenadas do usuário
+      var latitude = position.coords.latitude;
+      var longitude = position.coords.longitude;
+
+      // Atualiza os elementos HTML com as coordenadas
+      document.getElementById('latitude').textContent = latitude.toFixed(5);
+      document.getElementById('longitude').textContent = longitude.toFixed(5);
+
+      // Inicializa o mapa e o define na localização atual
+      var map = L.map('map').setView([latitude, longitude], 13);
+
+      // Carrega e exibe o mapa do OpenStreetMap
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
+      // Adiciona um marcador no mapa na localização atual
+      L.marker([latitude, longitude]).addTo(map)
+        .bindPopup('Você está aqui.')
+        .openPopup();
+
+    }, function(error) {
+      // Trata os casos de erro
+      console.error("Erro ao obter a localização: ", error);
+    });
+  } else {
+    // Trata o caso em que a geolocalização não é suportada
+    console.error("Geolocalização não é suportada por este navegador.");
+  }
+});
+</script>
+</body>
+</html>
