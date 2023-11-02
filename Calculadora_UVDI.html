@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de UVDI</title>
+</head>
+<body>
+
+<!-- Interface -->
+<label for="sensacaoTermica">Sensação Térmica (°C):</label>
+<input type="number" id="sensacaoTermica">
+<br><br>
+<label for="indiceUV">Índice UV:</label>
+<input type="number" id="indiceUV">
+<br><br>
+<button onclick="calcularDesconto()">GERAR UVDI</button>
+<br><br>
+<label for="resultado">Desconto (%):</label>
+<input type="text" id="resultado" readonly>
+
+<!-- Lógica do cálculo -->
+<script>
+function calcularDesconto() {
+    let sensacao_termica = parseFloat(document.getElementById("sensacaoTermica").value);
+    let indice_uv = parseFloat(document.getElementById("indiceUV").value);
+
+    let desconto_base_uv = indice_uv * 7;
+    let desconto_base_temperatura = (Math.abs(sensacao_termica - 40) / 40) * 30;
+    
+    let desconto_total = Math.round(Math.min(100, desconto_base_uv + desconto_base_temperatura));
+
+    if (indice_uv == 0) {
+        desconto_total = 0;
+    }
+
+    document.getElementById("resultado").value = desconto_total + "%";
+}
+</script>
+
+</body>
+</html>
