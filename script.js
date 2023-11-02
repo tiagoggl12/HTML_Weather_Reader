@@ -82,4 +82,21 @@ async function getWeatherData(latitude, longitude) {
     document.getElementById('timeOfDay').textContent = new Date().toLocaleTimeString();
     document.getElementById('surfaceReflection').textContent = 'N/A';
     console.log('Apresentou fatores')
+    calcularDesconto();
 }
+function calcularDesconto() {
+    let sensacao_termica = parseFloat(document.getElementById("temperature").textContent);
+    let indice_uv = parseFloat(document.getElementById("uvIndex").textContent);
+
+    let desconto_base_uv = indice_uv * 7;
+    let desconto_base_temperatura = (Math.abs(sensacao_termica - 40) / 40) * 30;
+    
+    let desconto_total = Math.round(Math.min(100, desconto_base_uv + desconto_base_temperatura));
+
+    if (indice_uv === 0) {
+        desconto_total = 0;
+    }
+
+    document.getElementById("resultado").textContent = desconto_total + "%";
+}
+
