@@ -21,6 +21,8 @@ document.getElementById('get-weather').addEventListener('click', function() {
     fetch(tempparms)
       .then(response => response.json())
       .then(data => {
+        const now = new Date();
+        const hours = now.getHours();
         // Processa os dados meteorológicos recebidos
         // Atualize a UI com os dados recebidos
         document.getElementById('temperature').textContent = data.minutely_15.temperature_2m[0] + '°C';
@@ -29,8 +31,8 @@ document.getElementById('get-weather').addEventListener('click', function() {
         document.getElementById('apparent-temperature').textContent = data.minutely_15.apparent_temperature[0] + '°C';
         document.getElementById('wind-speed').textContent = data.minutely_15.windspeed_10m[0] + ' km/h';
         document.getElementById('direct-radiation').textContent = data.minutely_15.direct_radiation[0] + ' W/m²';
-        document.getElementById('cloud-cover').textContent = data.hourly.cloudcover[0] + '%';
-        document.getElementById('uv-index').textContent = data.hourly.uv_index[0];
+        document.getElementById('cloud-cover').textContent = data.hourly.cloudcover + '%';
+        document.getElementById('uv-index').textContent = data.hourly.uv_index;
         document.getElementById('timeOfDay').textContent = new Date().toLocaleTimeString();
 
         calcularDesconto()
