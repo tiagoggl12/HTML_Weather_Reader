@@ -15,7 +15,7 @@ document.getElementById('get-weather').addEventListener('click', function() {
   });
   
   function fetchWeatherData(latitude, longitude) {
-    const tempparms = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&minutely_15=temperature_2m,relativehumidity_2m,apparent_temperature,windspeed_10m,direct_radiation&hourly=cloudcover,uv_index&timezone=America%2FSao_Paulo&models=best_match`;
+    const tempparms = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&minutely_15=temperature_2m,relativehumidity_2m,apparent_temperature,windspeed_10m,direct_radiation&hourly=cloudcover,uv_index&timezone=America%2FSao_Paulo&timeformat=unixtime`;
     const elevationparms = `https://api.open-meteo.com/v1/elevation?latitude=${latitude}&longitude=${longitude}`
   
     fetch(tempparms)
@@ -31,8 +31,8 @@ document.getElementById('get-weather').addEventListener('click', function() {
         document.getElementById('apparent-temperature').textContent = data.minutely_15.apparent_temperature[0] + '°C';
         document.getElementById('wind-speed').textContent = data.minutely_15.windspeed_10m[0] + ' km/h';
         document.getElementById('direct-radiation').textContent = data.minutely_15.direct_radiation[0] + ' W/m²';
-        document.getElementById('cloud-cover').textContent = data.hourly.cloudcover + '%';
-        document.getElementById('uv-index').textContent = data.hourly.uv_index;
+        document.getElementById('cloud-cover').textContent = data.hourly.cloudcover[9] + '%';
+        document.getElementById('uv-index').textContent = data.hourly.uv_index[9];
         document.getElementById('timeOfDay').textContent = new Date().toLocaleTimeString();
 
         calcularDesconto()
